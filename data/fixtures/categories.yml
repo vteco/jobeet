@@ -1,9 +1,13 @@
 JobeetCategory:
   design:
     name: Design
+    slug: design
   programming:
     name: Programming
+    slug: programming
   manager:
     name: Manager
+    slug: manager
   administrator:
     name: Administrator
+    slug: administrator

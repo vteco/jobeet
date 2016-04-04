@@ -4,7 +4,11 @@
   'title',
   sprintf('%s is looking for a %s', $job->getCompany(), $job->getPosition()))
 ?>
- 
+
+<?php if ($sf_request->getParameter('token') == $job->getToken()): ?>
+    <?php include_partial('job/admin', array('job' => $job)) ?>
+<?php endif ?>
+
 <div id="job">
   <h1><?php echo $job->getCompany() ?></h1>
   <h2><?php echo $job->getLocation() ?></h2>
@@ -16,8 +20,7 @@
   <?php if ($job->getLogo()): ?>
     <div class="logo">
       <a href="<?php echo $job->getUrl() ?>">
-        <img src="/uploads/jobs/<?php echo $job->getLogo() ?>"
-          alt="<?php echo $job->getCompany() ?> logo" />
+        <img src="/uploads/jobs/<?php echo $job->getLogo() ?>" alt="<?php echo $job->getCompany() ?> logo" />
       </a>
     </div>
   <?php endif; ?>
@@ -32,11 +35,5 @@
  
   <div class="meta">
     <small>posted on <?php echo $job->getDateTimeObject('created_at')->format('m/d/Y') ?></small>
-  </div>
- 
-  <div style="padding: 20px 0">
-    <a href="<?php echo url_for('job/edit?id='.$job->getId()) ?>">
-      Edit
-    </a>
   </div>
 </div>
