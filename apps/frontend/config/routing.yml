@@ -2,6 +2,12 @@
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
 
 # default rules
+category:
+  url:      /category/:slug
+  class:    sfDoctrineRoute
+  param:    { module: category, action: show }
+  options:  { model: JobeetCategory, type: object }
+
 job:
   class:   sfDoctrineRouteCollection
   options: { model: JobeetJob }
@@ -14,7 +20,7 @@ job_show_user:
   requirements:
     id: \d+
     sf_method: [get]
- 
+
 # default rules
 homepage:
   url:   /
@@ -26,9 +32,3 @@ default_index:
  
 default:
   url:   /:module/:action/*
-
-category:
-  url:      /category/:slug
-  class:    sfDoctrineRoute
-  param:    { module: category, action: show }
-  options:  { model: JobeetCategory, type: object }
