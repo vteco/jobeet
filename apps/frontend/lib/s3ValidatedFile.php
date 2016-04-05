@@ -87,8 +87,6 @@ class s3ValidatedFile extends sfValidatedFile
             'ContentType'   =>  'text/plain',
             // 'ACL'           =>  'public-read'
         ]);
-        
-        var_dump($result);die;
     }
     
     // PARSE AND FETCH PATH FROM UPLOAD DIR
