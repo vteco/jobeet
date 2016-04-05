@@ -40,7 +40,7 @@ class JobeetJobForm extends BaseJobeetJobForm
         
         $this->validatorSchema['logo'] = new sfValidatorFile(array(
             'required'   => false,
-            'path'       => sfConfig::get('sf_upload_dir').'/jobs',
+            'path'       => sfConfig::get('sf_upload_dir') . DIRECTORY_SEPARATOR . 'jobs',
             'mime_types' => 'web_images',
             'validated_file_class'  =>  's3ValidatedFile'
         ));

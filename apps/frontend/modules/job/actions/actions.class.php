@@ -78,7 +78,7 @@ class jobActions extends sfActions
         if ($form->isValid()) {
             $job = $form->save();
             die;
-            $this->redirect('job_show', $job);
+            // $this->redirect('job_show', $job);
         }
     }
     

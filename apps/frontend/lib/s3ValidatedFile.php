@@ -1,5 +1,7 @@
 <?php
 
+require_once sfConfig::get('sf_lib_dir') . '/vendor/autoload.php';
+
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -58,8 +60,6 @@ class s3ValidatedFile extends sfValidatedFile
         // chmod our file
         chmod($file, $fileMode);
         
-        var_dump('test');
-        
         $this->sendFileToServer($file);
         
         return null === $this->path ? $file : str_replace($this->path.DIRECTORY_SEPARATOR, '', $file);
@@ -67,15 +67,48 @@ class s3ValidatedFile extends sfValidatedFile
     
     public function sendFileToServer($file)
     {
-        $data = array(
-            'file'  =>  new \CURLFile($file)
-        );
+        // FETCH & CONFIGURE S3Client
+        $s3Client = new Aws\S3\S3Client(array(
+            'version'       =>  'latest',
+            'region'        =>  'eu-west-1',
+            'credentials'   =>  array(
+                'key'           =>  'AKIAJ7FKSH4N3TRUMIDQ',
+                'secret'        =>  '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'
+            ),
+            'scheme'        =>  'http'
+        ));
         
-        $ch = curl_init('');
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        // SEND & FETCH Object to CDN
+        $result = $s3Client->putObject([
+            'Bucket'        =>  'upload.primesenergie.fr',
+            'Key'           =>  $this->parseFilename($file),
+            // 'Body'          =>  'Just a test',
+            'SourceFile'    =>  $file,
+            'ContentType'   =>  'text/plain',
+            // 'ACL'           =>  'public-read'
+        ]);
         
-        curl_exec($ch);
-        curl_close($ch);
+        var_dump($result);die;
+    }
+    
+    // PARSE AND FETCH PATH FROM UPLOAD DIR
+    public function parseFilename($file)
+    {
+        $result = 'uploads';
+        
+        $uploadDir = explode(DIRECTORY_SEPARATOR, sfConfig::get('sf_upload_dir'));
+        $explodedFile = explode(DIRECTORY_SEPARATOR, $file);
+        
+        array_pop($explodedFile);
+        
+        foreach ($explodedFile as $k => $dir) {
+            if (isset($uploadDir[$k])) {
+                continue;
+            }
+            
+            $result .= '/' . $dir;
+        }
+        
+        return $result . '/' . $this->getOriginalName();
     }
 }
