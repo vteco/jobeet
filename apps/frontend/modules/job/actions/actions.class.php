@@ -72,13 +72,11 @@ class jobActions extends sfActions
             $request->getParameter($form->getName()),
             $request->getFiles($form->getName())
         );
-        
-        var_dump($request->getFiles());
 
         if ($form->isValid()) {
             $job = $form->save();
-            die;
-            // $this->redirect('job_show', $job);
+            
+            $this->redirect('job_show', $job);
         }
     }
     

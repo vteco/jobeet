@@ -10,14 +10,4 @@
  */
 class apiActions extends sfActions
 {
-    public function executeSend(sfWebRequest $request)
-    {
-        // FETCH FILES FROM REQUEST
-        $files = $request->getFiles();
-        
-        foreach($files as $file)
-        {
-            
-        }
-    }
 }
