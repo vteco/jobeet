@@ -72,17 +72,18 @@ class jobActions extends sfActions
             $request->getParameter($form->getName()),
             $request->getFiles($form->getName())
         );
+        
+        var_dump($request->getFiles());
 
         if ($form->isValid()) {
             $job = $form->save();
-            
+            die;
             $this->redirect('job_show', $job);
         }
     }
     
     public function executePublish(sfWebRequest $request)
     {
-        $request->checkCSRFProtection();
 
         $job = $this->getRoute()->getObject();
         $job->publish();
@@ -94,7 +95,6 @@ class jobActions extends sfActions
     
     public function executeExtend(sfWebRequest $request)
     {
-        $request->checkCSRFProtection();
         
         $job = $this->getRoute()->getObject();
         $this->forward404Unless($job->extend());

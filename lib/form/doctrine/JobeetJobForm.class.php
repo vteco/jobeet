@@ -42,6 +42,7 @@ class JobeetJobForm extends BaseJobeetJobForm
             'required'   => false,
             'path'       => sfConfig::get('sf_upload_dir').'/jobs',
             'mime_types' => 'web_images',
+            'validated_file_class'  =>  's3ValidatedFile'
         ));
         
         $this->widgetSchema->setHelp('is_public', 'Whether the job can also be published on affiliate websites or not.');
@@ -56,5 +57,10 @@ class JobeetJobForm extends BaseJobeetJobForm
             $this['is_activated'],
             $this['token']
         );
+    }
+    
+    public function save($con = null) {
+        parent::save($con);
+        $file = $this->getValue('logo');
     }
 }
