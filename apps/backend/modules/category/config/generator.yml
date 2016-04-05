@@ -9,16 +9,22 @@ generator:
     plural:                ~
     route_prefix:          jobeet_category
     with_doctrine_route:   true
-    actions_base_class:    sfActions
-
+ 
     config:
       actions: ~
       fields:  ~
       list:
         title:   Category Management
         display: [=name, slug]
-      filter:  ~
-      form:    ~
+        batch_actions: {}
+        object_actions: {}
+      filter:
+        class: false
+      form:
+        actions:
+          _delete: ~
+          _list:   ~
+          _save:   ~
       edit:
         title: Editing Category "%%name%%"
       new:

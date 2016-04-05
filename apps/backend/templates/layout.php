@@ -26,6 +26,7 @@
           <li>
             <?php echo link_to('Categories', 'jobeet_category') ?>
           </li>
+            <li><?php echo link_to('Users', 'sf_guard_user') ?></li>
         </ul>
       </div>
  
